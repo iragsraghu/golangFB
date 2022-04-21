@@ -15,12 +15,14 @@ var (
 )
 
 func getPosts(response http.ResponseWriter, request *http.Request) {
-	fmt.Println("lkkk")
 	response.Header().Set("Content-type", "application/json")
 	posts, err := repo.FindAll()
+	fmt.Println("posts", posts)
+	fmt.Println("error", err)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{"error": "Error getting posts"}`))
+		return
 	}
 	response.WriteHeader(http.StatusOK)
 	json.NewEncoder(response).Encode(posts)
